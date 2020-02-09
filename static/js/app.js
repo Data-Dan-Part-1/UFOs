@@ -1,6 +1,5 @@
 // import the data from data.js
 
-import data from "./data"
 const tableData = data;
 
 // reference the HTML table using d3
