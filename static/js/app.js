@@ -39,9 +39,30 @@ function buildTable(data) {
     // just be the original tableData.
     buildTable(filteredData);
   };
+
   d3.select("#filter-btn").on("click", handleClick);
 
   buildTable(tableData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
