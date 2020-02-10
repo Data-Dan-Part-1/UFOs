@@ -23,25 +23,33 @@ function buildTable(data) {
     });
   }
 
-  function handleClick() {
-    // Grab the datetime value from the filter
-    let date = d3.select("#datetime").property("value");
-    let filteredData = tableData;
-    // Check to see if a date was entered and filter the
-    // data using that date.
-    if (date) {
-      // Apply `filter` to the table data to only keep the
-      // rows where the `datetime` value matches the filter value
-      filteredData = filteredData.filter(row => row.datetime === date);
-    };
-    // Rebuild the table using the filtered data
-    // @NOTE: If no date was entered, then filteredData will
-    // just be the original tableData.
-    buildTable(filteredData);
+  var filters = {};
+
+  function updateFilters() {
+
+  let changesElement = d3.select(this);
+  let elementValue = changesElement.property("value");
+  let filterId = changesElement.attr("id");
+  
+  if (elementValue) {
+    filters[filterId] = elementValue;
+    }
+  else {
+  delete filters[filterId];  
   };
+  filterTable();
+  }
 
-  d3.select("#filter-btn").on("click", handleClick);
+  function filterTable() {
+  let filteredData = tableData;
+  Object.entries(filters).forEach(([key,value]) =>{
+    filteredData = filteredData.filter(row => row[key] === value);
+  });
 
+  buildTable(filteredData);
+  }
+
+  d3.selectAll("input").on("change", updateFilters);
   buildTable(tableData);
 
 
